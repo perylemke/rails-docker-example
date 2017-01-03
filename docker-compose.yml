@@ -1,0 +1,18 @@
+# Usa a versão 2 do Docker Compose
+version: '2'
+services:
+  # Cria nosso container para o database
+  postgres:
+    image: 'postgres:9.5'
+
+  # Criar nosso container para rodar o projeto
+  website:
+    depends_on:
+      - 'postgres'
+    build: .
+    # Conecta a porta 3000 interna do container com a porta 3000 local
+    ports:
+      - '3000:3000'
+    # Conecta a pasta my_dockerized_app do container com a pasta onde está o docker-compose
+    volumes:
+      - '.:/my_dockerized_app'
